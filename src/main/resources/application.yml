@@ -3,7 +3,7 @@ feign:
     default-config: default
     mas:
       read_timeout: 20
-      connecTimeout: 20
+      connectTimeout: 20
     car-service:
-      read_timeout: 20
-      connect_timeout: 20
+      read_timeout: 30
+      connect_timeout: 30

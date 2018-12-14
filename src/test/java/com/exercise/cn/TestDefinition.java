@@ -1,6 +1,6 @@
 package com.exercise.cn;
 
-import com.exercise.cn.yaml.FeignConfig;
+import com.exercise.cn.yaml.FeignProperties;
 import com.exercise.cn.yaml.YamlConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +20,7 @@ public class TestDefinition {
 
     @Test
     public void test() {
-        FeignConfig bean = applicationContext.getBean(FeignConfig.class);
+        FeignProperties bean = applicationContext.getBean(FeignProperties.class);
         System.out.println(bean);
     }
 }
