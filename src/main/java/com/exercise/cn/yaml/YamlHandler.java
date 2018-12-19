@@ -1,11 +1,10 @@
 package com.exercise.cn.yaml;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.type.AnnotationMetadata;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -21,10 +20,8 @@ import java.util.regex.Pattern;
  * @author mengyiren
  */
 
-public class YamlHandler implements  ApplicationContextAware {
-    private ApplicationContext applicationContext;
-
-    public void execute() {
+public class YamlHandler implements ImportBeanDefinitionRegistrar {
+    public void execute(BeanDefinitionRegistry registry) {
         Yaml yaml = new Yaml();
         try {
             Map<String, Object> data = yaml.load(new FileInputStream(new File("D:/IdeaProjects/exercise/src/main/resources/application.yml")));
@@ -52,16 +49,16 @@ public class YamlHandler implements  ApplicationContextAware {
                             }
                         });
                         builder.addPropertyValue("config", config);
-                        /*if (registry instanceof DefaultListableBeanFactory) {
+                        if (registry instanceof DefaultListableBeanFactory) {
                             ((DefaultListableBeanFactory) registry).setAllowBeanDefinitionOverriding(true);
-                        }*/
-                        if (applicationContext instanceof DefaultListableBeanFactory) {
+                        }
+                        /*if (applicationContext instanceof DefaultListableBeanFactory) {
                             ((DefaultListableBeanFactory) applicationContext).setAllowBeanDefinitionOverriding(true);
                         }
                         if (applicationContext instanceof BeanDefinitionRegistry) {
                             ((BeanDefinitionRegistry) applicationContext).registerBeanDefinition("feignConfig", builder.getBeanDefinition());
-                        }
-                        //registry.registerBeanDefinition("feignConfig", builder.getBeanDefinition());
+                        }*/
+                        registry.registerBeanDefinition("feignConfig", builder.getBeanDefinition());
                     }
                 }
             }
@@ -84,8 +81,7 @@ public class YamlHandler implements  ApplicationContextAware {
 
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-        execute();
+    public void registerBeanDefinitions(AnnotationMetadata annotationMetadata, BeanDefinitionRegistry beanDefinitionRegistry) {
+        execute(beanDefinitionRegistry);
     }
 }

@@ -51,6 +51,12 @@
             <version>1.9.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.easyrules</groupId>
+            <artifactId>easyrules-core</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
